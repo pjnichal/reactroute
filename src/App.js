@@ -1,7 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import "firebase/firestore";
-//fetch from fir
+//fetch from firebase
+
 const USERROLE = "FARMER";
 
 function App() {
