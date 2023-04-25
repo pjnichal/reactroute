@@ -1,11 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-const USER_TYEPES = {
-  PUBLIC: "PUBLIC",
-  USER: "USER",
-  ADMIN: "ADMIN",
-};
-const CURR_USER = USER_TYEPES.ADMIN;
+import "firebase/firestore";
+//fetch from fir
+const USERROLE = "FARMER";
+
 function App() {
   return (
     <div>
@@ -20,14 +18,21 @@ function App() {
         ></Route>
 
         <Route
-          path="/user"
+          path="/farmer"
           element={
-            <UserElement>
-              <User />
-            </UserElement>
+            <FarmerElement>
+              <Farmer />
+            </FarmerElement>
           }
         ></Route>
-
+        <Route
+          path="/retailer"
+          element={
+            <RetailerElement>
+              <Retailer />
+            </RetailerElement>
+          }
+        ></Route>
         <Route
           path="/admin"
           element={
@@ -46,27 +51,38 @@ function App() {
 function Home() {
   return <div>Home</div>;
 }
-function User() {
-  return <div>Normal User</div>;
+function Farmer() {
+  return <div>Farmer User</div>;
 }
 function Admin() {
   return <div>admin</div>;
 }
+function Retailer() {
+  return <div>Retailer</div>;
+}
 function PublicElement({ children }) {
   return children;
 }
-function UserElement({ children }) {
-  if (CURR_USER === USER_TYEPES.USER) {
+function FarmerElement({ children }) {
+  if (USERROLE === "FARMER") {
     return children;
   } else {
     return <div>NO ACCESS TO USER ROUTES</div>;
   }
 }
-function AdminElement({ children }) {
-  if (CURR_USER === USER_TYEPES.ADMIN) {
+function RetailerElement({ children }) {
+  if (USERROLE === "RETAILER") {
     return children;
   } else {
-    return <Navigate to={"/"}></Navigate>;
+    return <div>NO ACCESS TO RETAILER ROUTES</div>;
+  }
+}
+function AdminElement({ children }) {
+  if (USERROLE === "ADMIN") {
+    return children;
+  } else {
+    return <div>NO ACCESS TO ADMIN ROUTES</div>;
+    // return <Navigate to={"/"}></Navigate>;
   }
 }
 export default App;
